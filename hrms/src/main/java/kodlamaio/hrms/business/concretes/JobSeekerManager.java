@@ -12,12 +12,12 @@ import org.springframework.stereotype.Service;
 import kodlamaio.hrms.adapters.MernisService;
 import kodlamaio.hrms.business.abstracts.JobSeekerService;
 import kodlamaio.hrms.business.constants.Messages;
+import kodlamaio.hrms.core.services.verification.VerificationService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.ErrorResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
-import kodlamaio.hrms.core.utilities.verification.VerificationService;
 import kodlamaio.hrms.dataAccess.abstracts.JobSeekerDao;
 import kodlamaio.hrms.entities.concretes.JobSeeker;
 
@@ -83,10 +83,10 @@ public class JobSeekerManager implements JobSeekerService {
 
 	@Override
 	public Result areThereEmpty(JobSeeker jobSeeker) {
-		if(jobSeeker.getFirstName()==null||jobSeeker.getLastName()==null||jobSeeker.getNationalId()==null||jobSeeker.getBirthYear()==0||jobSeeker.getEmail()==null||jobSeeker.getPassword()==null||jobSeeker.getPasswordAgain()==null)
+		if(jobSeeker.getFirstName()==null||jobSeeker.getLastName()==null||jobSeeker.getNationalId()==null||jobSeeker.getBirthYear()==0||jobSeeker.getEmail()==null||jobSeeker.getPassword()==null)
 			return new ErrorResult(Messages.emptyBox);
 		
-		if(jobSeeker.getFirstName().length()==0||jobSeeker.getLastName().length()==0||jobSeeker.getNationalId().length()==0||jobSeeker.getPassword().length()==0||jobSeeker.getPasswordAgain().length()==0)
+		if(jobSeeker.getFirstName().length()==0||jobSeeker.getLastName().length()==0||jobSeeker.getNationalId().length()==0||jobSeeker.getPassword().length()==0)
 			return new ErrorResult(Messages.emptyBox);
 		
 		String emailPattern = "^(?=.{1,32}@)[A-Za-z0-9_]+(\\.[A-Za-z0-9_]+)*@"+"[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";

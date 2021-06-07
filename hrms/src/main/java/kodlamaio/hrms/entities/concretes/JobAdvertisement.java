@@ -1,6 +1,6 @@
 package kodlamaio.hrms.entities.concretes;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,10 +40,10 @@ public class JobAdvertisement {
 	private int openPositionCount;
 	
 	@Column(name="created_date")
-	private Date createdDate;
+	private LocalDate createdDate;
 	
 	@Column(name="application_dead_line")
-	private Date applicationDeadLine;
+	private LocalDate applicationDeadLine;
 	
 	@Column(name="is_active")
 	private boolean isActive;
@@ -54,7 +54,7 @@ public class JobAdvertisement {
 	
 	@ManyToOne()
 	@JoinColumn(name="job_position_id")
-	private JobPosition position;
+	private JobPosition jobPosition;
 	
 	@ManyToOne()
 	@JoinColumn(name="employer_id")

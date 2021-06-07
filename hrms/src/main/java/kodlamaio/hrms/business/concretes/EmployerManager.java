@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 
 import kodlamaio.hrms.business.abstracts.EmployerService;
 import kodlamaio.hrms.business.constants.Messages;
+import kodlamaio.hrms.core.services.verification.VerificationService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.ErrorResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
-import kodlamaio.hrms.core.utilities.verification.VerificationService;
 import kodlamaio.hrms.dataAccess.abstracts.EmployerDao;
 import kodlamaio.hrms.entities.concretes.Employer;
 
@@ -65,10 +65,10 @@ public class EmployerManager implements EmployerService {
 
 	@Override
 	public Result areThereEmpty(Employer employer) {
-		if(employer.getCompanyName()==null||employer.getWebsite()==null||employer.getEmail()==null||employer.getTelephone()==null||employer.getPassword()==null||employer.getPasswordAgain()==null)
+		if(employer.getCompanyName()==null||employer.getWebsite()==null||employer.getEmail()==null||employer.getTelephone()==null||employer.getPassword()==null)
 			return new ErrorResult(Messages.emptyBox);
 		
-		if(employer.getCompanyName().length()==0||employer.getWebsite().length()==0||employer.getTelephone().length()==0||employer.getPassword().length()==0||employer.getPasswordAgain().length()==0)
+		if(employer.getCompanyName().length()==0||employer.getWebsite().length()==0||employer.getTelephone().length()==0||employer.getPassword().length()==0)
 			return new ErrorResult(Messages.emptyBox);
 		
 		String emailPattern = "^(?=.{1,32}@)[A-Za-z0-9_]+(\\.[A-Za-z0-9_]+)*@"+"[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";

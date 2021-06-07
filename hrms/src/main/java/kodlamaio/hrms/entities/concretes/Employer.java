@@ -4,30 +4,26 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
+@EqualsAndHashCode(callSuper=false)
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="employers")
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler","jobAdvertisements"})
-public class Employer {
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="employer_id")
-	private int id;
+@PrimaryKeyJoinColumn(name="user_id",referencedColumnName="id")
+public class Employer extends User {
 	
 	@Column(name="company_name")
 	private String companyName;
@@ -35,22 +31,20 @@ public class Employer {
 	@Column(name="website")
 	private String website;
 	
-	@Column(name="email")
-	private String email;
-	
 	@Column(name="telephone")
 	private String telephone;
 	
-	@Column(name="password")
-	private String password;
-	
-	@Column(name="password_again")
-	private String passwordAgain;
-	
-	@Column(name="is_verified")
+	@Column(name="is_verified",columnDefinition = "boolean default false")
 	private boolean isVerified;
 	
-	 @OneToMany(mappedBy = "employer")
-	 private List<JobAdvertisement> jobAdvertisements;
+	@OneToMany(mappedBy = "employer")
+	private List<JobAdvertisement> jobAdvertisements;
 	
+	public Employer(String email, String password, String companyName,String website,String telephone) {
+	        super(email, password);
+	        this.companyName = companyName;
+	        this.website = website;
+	        this.telephone = telephone;
+	}
+	 
 }

@@ -30,7 +30,7 @@ public class JobAdvertisementManager implements JobAdvertisementService {
 		if(!areThereEmpty(jobAdvertisement).isSuccess())
 			return new ErrorResult(areThereEmpty(jobAdvertisement).getMessage());
 		this.jobAdvertisementDao.save(jobAdvertisement);
-		return new SuccessResult(Messages.successfullyAdded);
+		return new SuccessResult(Messages.successfullyAdded);		
 	}
 	
 	@Override
@@ -65,7 +65,7 @@ public class JobAdvertisementManager implements JobAdvertisementService {
 	
 	@Override
 	public Result areThereEmpty(JobAdvertisement jobAdvertisement) {
-		if(jobAdvertisement.getPosition()==null||jobAdvertisement.getDescription()==null||jobAdvertisement.getCity()==null)
+		if(jobAdvertisement.getJobPosition()==null||jobAdvertisement.getDescription()==null||jobAdvertisement.getCity()==null)
 			return new ErrorResult(Messages.emptyBox);
 		
 		if(jobAdvertisement.getDescription().length()==0||jobAdvertisement.getOpenPositionCount()==0)
