@@ -12,12 +12,12 @@ import org.springframework.stereotype.Service;
 import kodlamaio.hrms.adapters.MernisService;
 import kodlamaio.hrms.business.abstracts.JobSeekerService;
 import kodlamaio.hrms.business.constants.Messages;
-import kodlamaio.hrms.core.services.verification.VerificationService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.ErrorResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
+import kodlamaio.hrms.core.utilities.services.verification.VerificationService;
 import kodlamaio.hrms.dataAccess.abstracts.JobSeekerDao;
 import kodlamaio.hrms.entities.concretes.JobSeeker;
 

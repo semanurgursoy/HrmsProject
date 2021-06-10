@@ -5,4 +5,5 @@ import kodlamaio.hrms.entities.concretes.Image;
 
 public interface ImageService {
 	Result add(Image image);
+	DataResult<Image> get(int id);
 }

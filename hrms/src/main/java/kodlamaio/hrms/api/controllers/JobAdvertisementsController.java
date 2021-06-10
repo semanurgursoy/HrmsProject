@@ -33,8 +33,8 @@ public class JobAdvertisementsController {
 	}
 	
 	@DeleteMapping("/delete")
-	public Result delete(@RequestBody JobAdvertisement jobAdvertisement) {
-		return this.jobAdvertisementService.delete(jobAdvertisement);
+	public Result delete(int jobAdvertisementId) {
+		return this.jobAdvertisementService.delete(jobAdvertisementId);
 	}
 	
 	@GetMapping("/getall")

@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kodlamaio.hrms.business.abstracts.ImageService;
+import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
+import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.entities.concretes.Image;
 import kodlamaio.hrms.dataAccess.abstracts.ImageDao;
@@ -24,6 +26,11 @@ public class ImageManager implements ImageService {
 	public Result add(Image image) {
 		this.imageDao.save(image);
 		return new SuccessResult("başarılı");
+	}
+	
+	@Override
+	public DataResult<Image> get(int id) {
+		return new SuccessDataResult<Image>(this.imageDao.getById(id));
 	}
 
 }

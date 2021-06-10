@@ -13,6 +13,7 @@ import kodlamaio.hrms.business.abstracts.JobSeekerCVService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.concretes.JobSeekerCV;
+import kodlamaio.hrms.entities.dtos.CreateCvDto;
 
 @RestController
 @RequestMapping("/api/jobseekercvs")
@@ -27,8 +28,8 @@ public class JobSeekerCVsController {
 	}
 	
 	@PostMapping("/add")
-	public Result add(@RequestBody JobSeekerCV cv) {
-		return this.jobSeekerCVService.add(cv);
+	public Result add(@RequestBody CreateCvDto cvAddDto) {
+		return this.jobSeekerCVService.add(cvAddDto);
 	}
 	
 	@GetMapping("/getAll")
@@ -36,14 +37,14 @@ public class JobSeekerCVsController {
 	    return this.jobSeekerCVService.getAll();
 	}
 	
-	@GetMapping("/getAllSortedWorkExperience")
-	public DataResult<List<JobSeekerCV>> getAllSortedWork(){
-	    return this.jobSeekerCVService.getAllSortedEducation();
+	@GetMapping("/getAllSortedExperience")
+	public DataResult<List<JobSeekerCV>> getAllSortedExperience(){
+	    return this.jobSeekerCVService.getAllSortedExperience();
 	}
 	
-	@GetMapping("/getAllSortedSchoolExperience")
-	public DataResult<List<JobSeekerCV>> getAllSortedSchool(){
-	    return this.jobSeekerCVService.getAllSortedExperience();
+	@GetMapping("/getAllSortedEducation")
+	public DataResult<List<JobSeekerCV>> getAllSortedEducation(){
+	    return this.jobSeekerCVService.getAllSortedEducation();
 	}
 	
 }

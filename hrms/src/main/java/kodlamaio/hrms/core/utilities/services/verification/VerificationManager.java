@@ -1,4 +1,4 @@
-package kodlamaio.hrms.core.services.verification;
+package kodlamaio.hrms.core.utilities.services.verification;
 
 import org.springframework.stereotype.Service;
 

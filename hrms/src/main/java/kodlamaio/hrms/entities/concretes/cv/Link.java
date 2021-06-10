@@ -1,9 +1,7 @@
 package kodlamaio.hrms.entities.concretes.cv;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,8 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,9 +35,9 @@ public class Link {
 	private String linkedinAdress;
 	
 
-	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="job_seeker_cv_id")
-	@JsonIgnore
+	@OneToOne(targetEntity = JobSeekerCV.class)
+	@JoinColumn(name="job_seeker_cv_id",referencedColumnName="job_seeker_cv_id")
+	@JsonProperty(access=Access.WRITE_ONLY)
 	private JobSeekerCV jobSeekerCV;
 
 } 

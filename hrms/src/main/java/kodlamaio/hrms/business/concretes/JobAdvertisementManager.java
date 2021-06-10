@@ -34,10 +34,11 @@ public class JobAdvertisementManager implements JobAdvertisementService {
 	}
 	
 	@Override
-	public Result delete(JobAdvertisement jobAdvertisement) {
+	public Result delete(int jobAdvertisementId) {
+		JobAdvertisement jobAdvertisement = jobAdvertisementDao.getById(jobAdvertisementId);
 		if(jobAdvertisement.isActive()==true)
 			return new ErrorResult(Messages.advertisementIsActive);
-		this.jobAdvertisementDao.delete(jobAdvertisement);
+		this.jobAdvertisementDao.deleteById(jobAdvertisementId);
 		return new SuccessResult(Messages.successfullyDeleted);
 	}
 

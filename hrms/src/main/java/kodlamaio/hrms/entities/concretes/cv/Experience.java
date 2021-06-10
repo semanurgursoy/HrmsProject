@@ -4,7 +4,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,7 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import kodlamaio.hrms.entities.concretes.JobSeekerCV;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="experiences")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Experience {
 	
 	@Id
@@ -46,9 +48,9 @@ public class Experience {
 	@Column(name="position")
 	private String position;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="job_seeker_cv_id")
-	@JsonIgnore
+	@ManyToOne(targetEntity = JobSeekerCV.class)
+	@JoinColumn(name="job_seeker_cv_id",referencedColumnName="job_seeker_cv_id")
+	@JsonProperty(access=Access.WRITE_ONLY)
 	private JobSeekerCV jobSeekerCV;
 	
 }

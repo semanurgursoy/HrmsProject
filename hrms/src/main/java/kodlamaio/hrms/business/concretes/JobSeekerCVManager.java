@@ -13,22 +13,29 @@ import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.entities.concretes.JobSeekerCV;
+import kodlamaio.hrms.entities.dtos.CreateCvDto;
 import kodlamaio.hrms.dataAccess.abstracts.JobSeekerCVDao;
+import kodlamaio.hrms.dataAccess.abstracts.JobSeekerDao;
 
 @Service
 public class JobSeekerCVManager implements JobSeekerCVService {
 
 	private JobSeekerCVDao jobSeekerCVDao;
+	private JobSeekerDao jobSeekerDao;
 	
 	@Autowired
-	public JobSeekerCVManager(JobSeekerCVDao jobSeekerCVDao) {
+	public JobSeekerCVManager(JobSeekerCVDao jobSeekerCVDao,JobSeekerDao jobSeekerDao) {
 		super();
 		this.jobSeekerCVDao = jobSeekerCVDao;
+		this.jobSeekerDao=jobSeekerDao;
 	}
 
 	@Override
-	public Result add(JobSeekerCV cv) {
-		this.jobSeekerCVDao.save(cv);
+	public Result add(CreateCvDto cvAddDto) {
+		JobSeekerCV jobSeekerCV = new JobSeekerCV();
+		jobSeekerCV.setCoverLetter(cvAddDto.getCoverLetter());
+		jobSeekerCV.setJobSeeker(this.jobSeekerDao.findById(cvAddDto.getJobSeekerId()).get());
+		this.jobSeekerCVDao.save(jobSeekerCV);
 		return new SuccessResult(Messages.successfullyAdded);
 	}
 	

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import kodlamaio.hrms.business.abstracts.ImageService;
-import kodlamaio.hrms.core.services.CloudinaryService;
+import kodlamaio.hrms.core.utilities.services.cloudinary.CloudinaryService;
 import kodlamaio.hrms.entities.concretes.Image;
 
 @RestController

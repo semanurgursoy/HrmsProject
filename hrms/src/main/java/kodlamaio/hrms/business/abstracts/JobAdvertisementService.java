@@ -9,7 +9,7 @@ import kodlamaio.hrms.entities.concretes.JobAdvertisement;
 public interface JobAdvertisementService {
 	Result add(JobAdvertisement jobAdvertisement);
 	Result areThereEmpty(JobAdvertisement jobAdvertisement);
-	Result delete(JobAdvertisement jobAdvertisement);
+	Result delete(int jobAdvertisementId);
 	
 	DataResult<List<JobAdvertisement>> getAll();
 	DataResult<List<JobAdvertisement>> findAllByIsActive(boolean isActive);

@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import kodlamaio.hrms.entities.concretes.cv.Education;
 import kodlamaio.hrms.entities.concretes.cv.Experience;
 import kodlamaio.hrms.entities.concretes.cv.Language;
@@ -46,23 +48,25 @@ public class JobSeekerCV {
 	private String coverLetter;
 	
 	
-	@OneToMany(mappedBy="jobSeekerCV",cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="jobSeekerCV",cascade=CascadeType.ALL)
 	private List<Education> educations;
 	
 	
-	@OneToMany(mappedBy="jobSeekerCV",cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="jobSeekerCV",cascade=CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<Experience> experiences;
-	
+
 	
 	@OneToMany(mappedBy="jobSeekerCV",cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Language> languages;
-	
-	
+
+
 	@OneToMany(mappedBy="jobSeekerCV",cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<SoftwareSkill> softwareSkills;
-	
+
 	
 	@OneToOne(mappedBy="jobSeekerCV",cascade=CascadeType.ALL,fetch = FetchType.LAZY)
 	private Link link;
+	
+	
 	
 }
