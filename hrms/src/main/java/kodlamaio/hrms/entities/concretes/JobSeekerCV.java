@@ -15,8 +15,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import kodlamaio.hrms.entities.concretes.cv.Education;
 import kodlamaio.hrms.entities.concretes.cv.Experience;
 import kodlamaio.hrms.entities.concretes.cv.Language;
@@ -40,9 +38,6 @@ public class JobSeekerCV {
 	@ManyToOne(targetEntity = JobSeeker.class,fetch = FetchType.EAGER)
 	@JoinColumn(name="user_id")
 	private JobSeeker jobSeeker;
-	
-	//@Column(name="image_path")
-	//private String imagePath;
 	
 	@Column(name = "cover_letter")
 	private String coverLetter;

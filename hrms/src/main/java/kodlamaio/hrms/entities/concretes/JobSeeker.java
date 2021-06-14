@@ -5,7 +5,9 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -40,10 +42,6 @@ public class JobSeeker extends User{
 	
 	@OneToMany(mappedBy="jobSeeker",orphanRemoval = true,cascade=CascadeType.ALL)
 	private List<JobSeekerCV> jobSeekersCV;
-	
-	
-	//@OneToMany(mappedBy="jobSeeker")
-	//private List<Image> images;
 
 	public JobSeeker(String email, String password, String firstName,String lastName,String nationalId,int birthYear) {
         super(email, password);

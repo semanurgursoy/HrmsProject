@@ -32,6 +32,11 @@ public class JobSeekersController {
 		return this.jobSeekerService.getAll();
 	}
 	
+	@GetMapping("/getbyid")
+	public DataResult<JobSeeker> getById(int id){
+		return this.jobSeekerService.getById(id);
+	}
+	
 	@PostMapping("/add")
 	public Result add(@RequestBody JobSeeker jobSeeker) throws NumberFormatException, RemoteException {
 		return this.jobSeekerService.add(jobSeeker);

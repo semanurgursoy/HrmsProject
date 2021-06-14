@@ -5,7 +5,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,30 +22,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name="images")
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Image {
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="image_id")
 	private int id;
 	
-	@Column(name="image_name")
-	private String imageName;
-	
 	@Column(name="image_url")
 	private String imageUrl;
 	
-	@Column(name="image_cloudinary_id")
-	private String imageCloudinaryId;
-	
-	//@ManyToOne()
-	//@JoinColumn(name="job_seeker_id")
-	//private JobSeeker jobSeeker;
-	
-	public Image(String imageName, String imageUrl, String imageCloudinaryId) {
-		super();
-		this.imageName = imageName;
-		this.imageUrl = imageUrl;
-		this.imageCloudinaryId = imageCloudinaryId;
-	}
+	@OneToOne(targetEntity = User.class)
+	@JoinColumn(name="user_id",referencedColumnName="id")
+	@JsonProperty(access=Access.WRITE_ONLY)
+	private User user;
 	
 }

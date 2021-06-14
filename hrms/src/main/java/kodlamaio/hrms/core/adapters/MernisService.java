@@ -1,4 +1,4 @@
-package kodlamaio.hrms.adapters;
+package kodlamaio.hrms.core.adapters;
 
 import java.rmi.RemoteException;
 

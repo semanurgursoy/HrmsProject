@@ -25,5 +25,6 @@ public class Messages {
 	
 	public static String advertisementIsActive = "Aktif İlan Kapatılamaz";
 	
+	public static String notFoundSeeker = "Verilen Id'ye Sahip Bir Aday Mevcut Değil";
 	
 }

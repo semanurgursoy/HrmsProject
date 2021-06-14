@@ -1,6 +1,7 @@
 package kodlamaio.hrms.core.utilities.services.cloudinary;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ public class CloudinaryManager implements CloudinaryService{
 		this.cloudinary = cloudinary;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	@Override
 	public DataResult<?> save(MultipartFile file) {
 		
@@ -38,6 +40,14 @@ public class CloudinaryManager implements CloudinaryService{
 			e.printStackTrace();
 		}
 		return new ErrorDataResult<Map>();	
+	}
+	
+	@Override
+	public DataResult<Map> delete(String id) throws IOException {
+		 Map<String , Boolean> options = new HashMap<>();
+	        options.put("invalidate",true);
+	        Map result = cloudinary.uploader().destroy(id,options);
+	        return new SuccessDataResult<>(result);
 	}
 
 }
