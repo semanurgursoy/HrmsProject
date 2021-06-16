@@ -62,6 +62,4 @@ public class JobSeekerCV {
 	@OneToOne(mappedBy="jobSeekerCV",cascade=CascadeType.ALL,fetch = FetchType.LAZY)
 	private Link link;
 	
-	
-	
 }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import kodlamaio.hrms.business.abstracts.JobSeekerService;
 import kodlamaio.hrms.business.constants.Messages;
-import kodlamaio.hrms.core.adapters.MernisService;
+import kodlamaio.hrms.core.adapters.mernis.MernisService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.ErrorResult;
 import kodlamaio.hrms.core.utilities.results.Result;

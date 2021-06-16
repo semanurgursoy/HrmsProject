@@ -1,4 +1,4 @@
-package kodlamaio.hrms.core.utilities.services.cloudinary;
+package kodlamaio.hrms.core.adapters.cloudinary;
 
 import java.io.IOException;
 import java.util.HashMap;

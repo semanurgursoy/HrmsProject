@@ -1,4 +1,4 @@
-package kodlamaio.hrms.core.utilities.services.cloudinary;
+package kodlamaio.hrms.core.adapters.cloudinary;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

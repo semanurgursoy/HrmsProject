@@ -1,12 +1,9 @@
 package kodlamaio.hrms.entities.concretes;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.OneToOne;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,8 +33,8 @@ public class User {
 	@Column(name="password")
 	private String password;
 	
-	@OneToOne(mappedBy="user",cascade=CascadeType.ALL,fetch = FetchType.LAZY)
-	private Image image;
+	//@OneToOne(mappedBy="user",cascade=CascadeType.ALL,fetch = FetchType.LAZY)
+	//private Image image;
 	
 	public User(String email, String password) {
 		this.email = email;

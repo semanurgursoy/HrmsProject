@@ -8,5 +8,5 @@ import kodlamaio.hrms.entities.concretes.User;
 
 public interface ImageService {
 	Result saveImage(MultipartFile file, int userId);
-	void imageTableSetter(User user);
+	
 }
