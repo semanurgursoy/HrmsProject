@@ -17,30 +17,29 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import kodlamaio.hrms.entities.concretes.JobSeekerCV;
 
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="languages")
+@Table(name = "languages")
 public class Language {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="language_id")
+	@Column(name = "language_id")
 	private int id;
-	
-	@Column(name="language_name")
+
+	@Column(name = "language_name")
 	private String languageName;
-	
+
 	@Min(1)
 	@Max(5)
-	@Column(name="language_level")
+	@Column(name = "language_level")
 	private int level;
-	
+
 	@ManyToOne(targetEntity = JobSeekerCV.class)
-	@JoinColumn(name="job_seeker_cv_id",referencedColumnName="job_seeker_cv_id")
-	@JsonProperty(access=Access.WRITE_ONLY)
+	@JoinColumn(name = "job_seeker_cv_id", referencedColumnName = "job_seeker_cv_id")
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private JobSeekerCV jobSeekerCV;
-	
+
 }

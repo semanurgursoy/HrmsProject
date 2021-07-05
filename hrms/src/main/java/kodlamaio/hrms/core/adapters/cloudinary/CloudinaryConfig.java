@@ -26,6 +26,6 @@ public class CloudinaryConfig {
 
     @Bean
     public CloudinaryService cloudinaryService(){
-        return new CloudinaryManager(cloudinaryUser());
+        return new CloudinaryAdapter(cloudinaryUser());
     }
 }

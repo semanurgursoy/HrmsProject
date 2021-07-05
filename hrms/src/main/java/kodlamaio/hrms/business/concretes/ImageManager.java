@@ -10,10 +10,10 @@ import kodlamaio.hrms.business.abstracts.ImageService;
 import kodlamaio.hrms.business.constants.Messages;
 import kodlamaio.hrms.core.adapters.cloudinary.CloudinaryService;
 import kodlamaio.hrms.core.dataAccess.UserDao;
+import kodlamaio.hrms.core.entities.concrete.User;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.entities.concretes.Image;
-import kodlamaio.hrms.entities.concretes.User;
 import kodlamaio.hrms.dataAccess.abstracts.ImageDao;
 
 @Service

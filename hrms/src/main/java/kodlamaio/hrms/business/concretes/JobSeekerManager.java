@@ -1,107 +1,81 @@
 package kodlamaio.hrms.business.concretes;
 
 import java.rmi.RemoteException;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import kodlamaio.hrms.business.abstracts.JobSeekerService;
 import kodlamaio.hrms.business.constants.Messages;
-import kodlamaio.hrms.core.adapters.mernis.MernisService;
+import kodlamaio.hrms.business.rules.BusinessRulesService;
+import kodlamaio.hrms.core.adapters.activation.ActivationService;
+import kodlamaio.hrms.core.adapters.email.EmailVerificationService;
+import kodlamaio.hrms.core.dataAccess.ActivationCodeDao;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.ErrorResult;
 import kodlamaio.hrms.core.utilities.results.Result;
+import kodlamaio.hrms.core.utilities.results.ResultChecker;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
-import kodlamaio.hrms.core.utilities.services.verification.VerificationService;
 import kodlamaio.hrms.dataAccess.abstracts.JobSeekerDao;
 import kodlamaio.hrms.entities.concretes.JobSeeker;
-
+import kodlamaio.hrms.entities.dtos.JobSeekerDto;
 
 @Service
 public class JobSeekerManager implements JobSeekerService {
 
 	private JobSeekerDao jobSeekerDao;
-	private MernisService mernisService;
-	private VerificationService verificationService;
-	
+	private ActivationCodeDao activationCodeDao;
+	private ActivationService activationService;
+	private EmailVerificationService emailVerificationService;
+	private BusinessRulesService businessRulesService;
+	private ModelMapper modelMapper;
+
 	@Autowired
-	public JobSeekerManager(JobSeekerDao jobSeekerDao,MernisService mernisService,VerificationService verificationService) {
-		this.jobSeekerDao=jobSeekerDao;
-		this.mernisService=mernisService;
-		this.verificationService=verificationService;
+	public JobSeekerManager(JobSeekerDao jobSeekerDao, ActivationCodeDao activationCodeDao,
+			ActivationService activationService, EmailVerificationService emailVerificationService,
+			BusinessRulesService businessRulesService, ModelMapper modelMapper) {
+		super();
+		this.jobSeekerDao = jobSeekerDao;
+		this.activationCodeDao = activationCodeDao;
+		this.activationService = activationService;
+		this.emailVerificationService = emailVerificationService;
+		this.businessRulesService = businessRulesService;
+		this.modelMapper = modelMapper;
 	}
-	
+
 	@Override
 	public DataResult<List<JobSeeker>> getAll() {
-		return new SuccessDataResult<List<JobSeeker>>(this.jobSeekerDao.findAll(),Messages.successfullyListed);
-	}
-	
-	@Override
-	public DataResult<JobSeeker> getById(int id) {
-		return new SuccessDataResult<JobSeeker>(this.jobSeekerDao.getById(id));
-	}
-	
-	@Override
-	public Result add(JobSeeker jobSeeker) throws NumberFormatException, RemoteException{
-		if(!areThereEmpty(jobSeeker).isSuccess())
-			return new ErrorResult(areThereEmpty(jobSeeker).getMessage());
-		//if(!MernisVerification(jobSeeker).isSuccess())
-			//return new ErrorResult(Messages.failedMernis);
-		if(!checkNationalId(jobSeeker).isSuccess())
-			return new ErrorResult(checkNationalId(jobSeeker).getMessage());
-		if(!checkEmail(jobSeeker).isSuccess())
-			return new ErrorResult(checkEmail(jobSeeker).getMessage());
-		if(!this.verificationService.verificationEmail(jobSeeker.getEmail()).isSuccess())
-			return new ErrorResult(Messages.notVerifiedEmail);
-		this.jobSeekerDao.save(jobSeeker);
-		return new SuccessResult(Messages.successfullyRegister);
-	}
-
-	
-	
-	
-	@Override
-	public Result MernisVerification(JobSeeker jobSeeker) throws NumberFormatException, RemoteException {
-		if(this.mernisService.checkUser(jobSeeker.getNationalId(), jobSeeker.getFirstName(), jobSeeker.getLastName(), jobSeeker.getBirthYear())) 
-			return new SuccessResult(Messages.successfulMernis);
-		return new ErrorResult(Messages.failedMernis);
+		return new SuccessDataResult<List<JobSeeker>>(this.jobSeekerDao.findAll(), Messages.successfullyListed);
 	}
 
 	@Override
-	public Result checkEmail(JobSeeker jobSeeker) {
-		if(this.jobSeekerDao.findByEmailEquals(jobSeeker.getEmail())!=null)
-			return new ErrorResult(Messages.existEmail);
-		return new SuccessResult(Messages.confirmEmail);
+	public ResponseEntity<?> getById(int id) {
+		if(jobSeekerDao.existsById(id))
+			return ResponseEntity.ok(new SuccessDataResult<JobSeeker>(this.jobSeekerDao.getById(id)));
+		return ResponseEntity.badRequest().body(Messages.failedFindUserById);
 	}
 
 	@Override
-	public Result checkNationalId(JobSeeker jobSeeker) {
-		if(this.jobSeekerDao.findByNationalIdEquals(jobSeeker.getNationalId())!=null)
-			return new ErrorResult(Messages.existNationalId);
-		return new SuccessResult(Messages.confirmNationalId);
-	}
+	public Result add(JobSeekerDto jobSeekerDto) throws NumberFormatException, RemoteException {
+		Result result = ResultChecker.check(Arrays.asList(
+				businessRulesService.checkEmailExist(jobSeekerDto.getEmail()),
+				//businessRulesService.checkJobSeekerInformation(jobSeekerDto.getNationalId(),jobSeekerDto.getFirstName(), jobSeekerDto.getLastName(), jobSeekerDto.getBirthDate().getYear()),
+				businessRulesService.checkPasswordLength(jobSeekerDto.getPassword()),
+				businessRulesService.checkPasswordMatch(jobSeekerDto.getPassword(), jobSeekerDto.getRepassword())));
 
-	@Override
-	public Result areThereEmpty(JobSeeker jobSeeker) {
-		if(jobSeeker.getFirstName()==null||jobSeeker.getLastName()==null||jobSeeker.getNationalId()==null||jobSeeker.getBirthYear()==0||jobSeeker.getEmail()==null||jobSeeker.getPassword()==null)
-			return new ErrorResult(Messages.emptyBox);
-		
-		if(jobSeeker.getFirstName().length()==0||jobSeeker.getLastName().length()==0||jobSeeker.getNationalId().length()==0||jobSeeker.getPassword().length()==0)
-			return new ErrorResult(Messages.emptyBox);
-		
-		String emailPattern = "^(?=.{1,32}@)[A-Za-z0-9_]+(\\.[A-Za-z0-9_]+)*@"+"[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
-		Pattern pattern = Pattern.compile(emailPattern);
-		Matcher matcher = pattern.matcher(jobSeeker.getEmail());
-		if(!matcher.matches()){
-			return new ErrorResult(Messages.invalidEmail);
-		}
-		
-		return new SuccessResult();
+		if (result.isSuccess()) {
+			JobSeeker jobSeeker = modelMapper.map(jobSeekerDto, JobSeeker.class);
+			this.jobSeekerDao.save(jobSeeker);
+			this.activationCodeDao.save(activationService.createActivationCode(jobSeeker));
+			this.emailVerificationService.sendVerificationEmail(jobSeeker.getUuid().toString());
+			return new SuccessResult(Messages.successfullyAdded);
+		} else
+			return new ErrorResult(result.getMessage());
+
 	}
 
 }

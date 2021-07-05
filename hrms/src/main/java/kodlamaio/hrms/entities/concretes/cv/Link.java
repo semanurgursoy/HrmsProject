@@ -15,29 +15,27 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import kodlamaio.hrms.entities.concretes.JobSeekerCV;
 
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="links")
+@Table(name = "links")
 public class Link {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="link_id")
+	@Column(name = "link_id")
 	private int id;
-	
-	@Column(name="github_adress")
+
+	@Column(name = "github_adress")
 	private String githubAdress;
-	
-	@Column(name="linkedin_adress")
+
+	@Column(name = "linkedin_adress")
 	private String linkedinAdress;
-	
 
 	@OneToOne(targetEntity = JobSeekerCV.class)
-	@JoinColumn(name="job_seeker_cv_id",referencedColumnName="job_seeker_cv_id")
-	@JsonProperty(access=Access.WRITE_ONLY)
+	@JoinColumn(name = "job_seeker_cv_id", referencedColumnName = "job_seeker_cv_id")
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private JobSeekerCV jobSeekerCV;
 
-} 
+}

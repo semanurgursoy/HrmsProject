@@ -2,7 +2,11 @@ package kodlamaio.hrms.api.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,10 +17,11 @@ import kodlamaio.hrms.business.abstracts.EmployerService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.concretes.Employer;
-import kodlamaio.hrms.entities.concretes.SystemStaff;
+import kodlamaio.hrms.entities.dtos.EmployerDto;
 
 @RestController
 @RequestMapping("/api/employers")
+@CrossOrigin
 public class EmployersController {
 
 	private EmployerService employerService;
@@ -26,15 +31,20 @@ public class EmployersController {
 		super();
 		this.employerService = employerService;
 	}
-	
+
 	@GetMapping("/getall")
-	public DataResult<List<Employer>> getAll(){
+	public DataResult<List<Employer>> getAll() {
 		return this.employerService.getAll();
 	}
-	
-	@PostMapping("/add")
-	public Result add(@RequestBody Employer employer) {
-		return this.employerService.add(employer);
+
+	@GetMapping("/getbyid")
+	public ResponseEntity<?> getById(int id) {
+		return this.employerService.get(id);
 	}
-	
+
+	@PostMapping("/add")
+	public Result add(@RequestBody @Valid EmployerDto employerDto) {
+		return this.employerService.add(employerDto);
+	}
+
 }
